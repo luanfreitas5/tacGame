@@ -15,7 +15,7 @@
  *
  */
 State::State() :
-		bg(Sprite()), music(Music()) {
+		bg(), music() {
 
 	quitRequested = false;
 }
