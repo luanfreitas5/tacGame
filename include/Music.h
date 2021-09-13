@@ -20,7 +20,7 @@
 using namespace std;
 
 /**
- * @brief Classe Game responsavel genereciar as musicas do jogo.
+ * @brief Classe Music responsavel genereciar as musicas do jogo.
  * 
  */
 class Music {
