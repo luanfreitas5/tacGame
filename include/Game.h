@@ -2,7 +2,7 @@
  * @file Game.h
  * @author Luan Mendes Gonçalves Freitas - 150015585
  * @brief Cabecalho da classe Game com seus prototipos de metodo e ponteiros.
- * @version 0.1
+ * @version 0.2
  * 
  * @copyright Copyright (c) 2021
  * 
@@ -46,8 +46,9 @@ public:
 
 	/**
 	 * @brief Metodo que inicia o loop do jogo,
-	 * controlando a tela, recebendo dados de entrada, atualizando estados e desenhando objeto na tela.
-	 * 
+	 * controlando a tela, recebendo dados de entrada, atualizando estados e
+	 * desenhando objeto na tela.
+	 *
 	 */
 	void Run();
 
