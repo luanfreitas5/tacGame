@@ -42,7 +42,7 @@ void Vec2::CalcularRotacaoAngulo(float distancia) {
 	double angulo;
 	random_device numeroRand;
 
-	angulo = (double) (2 * PI * (numeroRand() / numeroRand.max()));
+	angulo = (double) (2 * PI * ((double)numeroRand() / numeroRand.max()));
 
 	x += (float) (cos(angulo) * distancia);
 	y += (float) (sin(angulo) * distancia);
