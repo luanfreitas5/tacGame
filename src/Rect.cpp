@@ -47,8 +47,7 @@ Rect::Rect(float x, float y, float w, float h) {
  * @return false caso contrario
  */
 bool Rect::Contains(float mouseX, float mouseY) {
-	if (mouseX >= x && mouseY >= y && mouseX <= x + w
-			&& mouseY <= y + h) {
+	if (mouseX >= x && mouseY >= y && mouseX <= x + w && mouseY <= y + h) {
 		return true;
 	}
 	return false;
