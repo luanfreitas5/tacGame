@@ -2,7 +2,7 @@
  * @file Sound.h
  * @author Luan Mendes Gonçalves Freitas - 150015585
  * @brief Cabecalho da classe Sound com seus prototipos de metodo e ponteiros.
- * @version 0.1
+ * @version 0.2
  * 
  * @copyright Copyright (c) 2021
  * 
@@ -42,15 +42,9 @@ public:
 	 * Abre o arquivo de entrada
 	 * 
 	 * @param associated endereco do objeto de jogo ao qual o componente esta associado.
-	 * @param file nome do arquivo de entrada
+	 * @param file nome do arquivo de som
 	 */
 	Sound(GameObject &associated, string file);
-
-	/**
-	 * @brief Destrutor da Classe Sound
-	 *
-	 */
-	~Sound();
 
 	/**
 	 * @brief Metodo para executar som.
@@ -68,7 +62,7 @@ public:
 	/**
 	 * @brief Metodo para carregar o arquivo de audio de entrada.
 	 * 
-	 * @param file 
+	 * @param file nome do arquivo de som
 	 */
 	void Open(string file);
 
@@ -82,18 +76,18 @@ public:
 
 	/**
 	 * @brief Sobreposicao do metodo da classe Component.
+	 * Metodo para renderizar o componente.
+	 *
+	 */
+	void Render();
+
+	/**
+	 * @brief Sobreposicao do metodo da classe Component.
 	 * Metodo para atualizar o componente.
 	 *
 	 * @param dt entrada de botoes do jogador
 	 */
 	void Update(float dt);
-
-	/**
-	 * @brief Sobreposicao do metodo da classe Component.
-	 * Metodo para renderizar o componente.
-	 *
-	 */
-	void Render();
 
 	/**
 	 * @brief Sobreposicao do metodo da classe Component.

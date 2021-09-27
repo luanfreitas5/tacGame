@@ -2,13 +2,14 @@
  * @file Sound.cpp
  * @author Luan Mendes Gonçalves Freitas - 150015585
  * @brief 
- * @version 0.1
+ * @version 0.2
  * 
  * @copyright Copyright (c) 2021
  * 
  */
 
 #include "../include/Sound.h"
+#include "../include/Resources.h"
 
 /**
  * @brief Construtor da Classe Sound
@@ -29,7 +30,7 @@ Sound::Sound(GameObject &associated) :
  * Abre o arquivo de entrada
  *
  * @param associated endereco do objeto de jogo ao qual o componente esta associado.
- * @param file nome do arquivo de entrada
+ * @param file nome do arquivo de som
  */
 Sound::Sound(GameObject &associated, string file) :
 		Sound(associated) {
@@ -39,20 +40,9 @@ Sound::Sound(GameObject &associated, string file) :
 }
 
 /**
- * @brief Destrutor da Classe Sound
- *
- */
-Sound::~Sound() {
-	if (chunk != nullptr) {
-		Mix_HaltChannel(channel);
-		Mix_FreeChunk(chunk);
-	}
-}
-
-/**
  * @brief Metodo para executar som.
  *
- * @param times Determina quantas vezes som é executada no jogo.
+ * @param times Determina quantas vezes som a ser executada no jogo.
  */
 void Sound::Play(int times) {
 
@@ -82,15 +72,25 @@ void Sound::Stop() {
 /**
  * @brief Metodo para carregar o arquivo de audio de entrada.
  *
- * @param file
+ * @param file nome do arquivo de som
  */
 void Sound::Open(string file) {
 
-	chunk = Mix_LoadWAV(file.c_str());
+	chunk = Resources::GetSound(file);
+
 	if (chunk == nullptr) {
-		cout << ERRO_OPEN_SOUND << SDL_GetError() << endl;
+		cout << ERRO_OPEN_SOUND << file << " " << SDL_GetError() << endl;
 		exit(0);
 	}
+
+}
+
+/**
+ * @brief Sobreposicao do metodo da classe Component.
+ * Metodo para renderizar o componente.
+ *
+ */
+void Sound::Render() {
 
 }
 
@@ -101,15 +101,6 @@ void Sound::Open(string file) {
  * @param dt entrada de botoes do jogador
  */
 void Sound::Update(float dt) {
-
-}
-
-/**
- * @brief Sobreposicao do metodo da classe Component.
- * Metodo para renderizar o componente.
- *
- */
-void Sound::Render() {
 
 }
 
