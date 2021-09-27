@@ -1,4 +1,4 @@
-# Trabalho TAC (2021.1) Game v2.0 - Geometria e Arrays de Objetos
+# Trabalho TAC (2021.1) Game v3.0 - Tile Set, Tile Map e Resource Management
 
 Implementado e Testado no Sistema Operacional Linux Ubuntu 20.04 LTS.
 
