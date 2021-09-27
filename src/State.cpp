@@ -2,7 +2,7 @@
  * @file State.cpp
  * @author Luan Mendes Gonçalves Freitas - 150015585
  * @brief Modulo dos metodos da classe State
- * @version 0.2
+ * @version 0.3
  * 
  * @copyright Copyright (c) 2021
  * 
@@ -17,12 +17,21 @@
 State::State() :
 		music(Music()) {
 
-	GameObject *gameObject = new GameObject();
-	Sprite *sprite = new Sprite(*gameObject, "assets/img/ocean.jpg");
-	gameObject->box.x = 0;
-	gameObject->box.y = 0;
-	gameObject->AddComponent(sprite);
-	objectArray.emplace_back(gameObject);
+	GameObject *gameObjectSprite = new GameObject();
+	Sprite *sprite = new Sprite(*gameObjectSprite, FILE_OCEAN);
+	gameObjectSprite->box.x = 0;
+	gameObjectSprite->box.y = 0;
+	gameObjectSprite->AddComponent(sprite);
+	objectArray.emplace_back(gameObjectSprite);
+
+	GameObject *gameObjectTileMap = new GameObject();
+	TileSet *tileSet = new TileSet(*gameObjectTileMap, TILE_WIDTH, TILE_HEIGHT,
+			FILE_TILE_SET);
+	TileMap *tileMap = new TileMap(*gameObjectTileMap, FILE_TILE_MAP, tileSet);
+	gameObjectTileMap->box.x = 0;
+	gameObjectTileMap->box.y = 0;
+	gameObjectTileMap->AddComponent(tileMap);
+	objectArray.emplace_back(gameObjectTileMap);
 
 	quitRequested = false;
 }
@@ -40,7 +49,7 @@ State::~State() {
  *
  */
 void State::LoadAssets() {
-	music.Open("assets/audio/stageState.ogg");
+	music.Open(FILE_STAGE_STATE);
 	music.Play();
 }
 
@@ -168,8 +177,8 @@ void State::Input() {
 void State::AddObject(int x, int y) {
 
 	GameObject *gameObject = new GameObject();
-	Sprite *sprite = new Sprite(*gameObject, "assets/img/penguinface.png");
-	Sound *sound = new Sound(*gameObject, "assets/audio/boom.wav");
+	Sprite *sprite = new Sprite(*gameObject, FILE_PENGUIN_FACE);
+	Sound *sound = new Sound(*gameObject, FILE_BOOM);
 	Face *face = new Face(*gameObject);
 
 	gameObject->box.x = x;

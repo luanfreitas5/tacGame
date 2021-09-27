@@ -2,7 +2,7 @@
  * @file State.h
  * @author Luan Mendes Gonçalves Freitas - 150015585
  * @brief Cabecalho da classe State com seus prototipos de funcoes e ponteiros.
- * @version 0.2
+ * @version 0.3
  * 
  * @copyright Copyright (c) 2021
  * 
@@ -13,12 +13,24 @@
 
 #define INCLUDE_SDL
 
+#define FILE_OCEAN "assets/img/ocean.jpg"
+#define FILE_TILE_SET "assets/img/tileset.png"
+#define FILE_TILE_MAP "assets/map/tileMap.txt"
+#define FILE_STAGE_STATE "assets/audio/stageState.ogg"
+#define FILE_PENGUIN_FACE "assets/img/penguinface.png"
+#define FILE_BOOM "assets/audio/boom.wav"
+
+#define TILE_WIDTH 64
+#define TILE_HEIGHT 64
+
 #include "Messages.h"
 #include "SDL_include.h"
 #include "Sprite.h"
 #include "Music.h"
 #include "Face.h"
 #include "Vec2.h"
+#include "TileMap.h"
+#include "TileSet.h"
 #include <iostream>
 
 using namespace std;
