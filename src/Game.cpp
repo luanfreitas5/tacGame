@@ -2,13 +2,14 @@
  * @file Game.cpp
  * @author Luan Mendes Gonçalves Freitas - 150015585
  * @brief Modulo dos metodos da classe Game
- * @version 0.2
+ * @version 0.3
  * 
  * @copyright Copyright (c) 2021
  * 
  */
 
 #include "../include/Game.h"
+#include "../include/Resources.h"
 
 /**
  * @brief Construtor da Classe Game.
@@ -40,14 +41,14 @@ Game::Game(string title, int width, int height) {
 		MIX_DEFAULT_FORMAT,
 		MIX_DEFAULT_CHANNELS, MIX_CHUNKSIZE);
 
-		int mixAllocateChannels = Mix_AllocateChannels(MIX_CHANNELS);
+		int mixAllocateChannels = Mix_AllocateChannels(MIX_CHANNEL);
 
 		if (sdlInit != 0) {
 			cout << ERRO_INIT_SDL << SDL_GetError() << endl;
 			exit(0);
 
 		} else if (imgInit == 0) {
-			cout << ERRO_INIT_SDL_IMAGE << SDL_GetError() << endl;;
+			cout << ERRO_INIT_SDL_IMAGE << SDL_GetError() << endl;
 			exit(0);
 
 		} else if (mixInit == 0) {
@@ -92,6 +93,10 @@ Game::Game(string title, int width, int height) {
  */
 Game::~Game() {
 	delete state;
+
+	Resources::ClearImages();
+	Resources::ClearMusics();
+	Resources::ClearSounds();
 
 	Mix_CloseAudio();
 	Mix_Quit();

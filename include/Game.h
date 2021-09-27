@@ -2,7 +2,7 @@
  * @file Game.h
  * @author Luan Mendes Gonçalves Freitas - 150015585
  * @brief Cabecalho da classe Game com seus prototipos de metodo e ponteiros.
- * @version 0.2
+ * @version 0.3
  * 
  * @copyright Copyright (c) 2021
  * 
@@ -20,7 +20,7 @@
 #define HEIGHT 600
 
 #define MIX_CHUNKSIZE 1024
-#define MIX_CHANNELS 32
+#define MIX_CHANNEL 32
 
 #include "Messages.h"
 #include "SDL_include.h"
