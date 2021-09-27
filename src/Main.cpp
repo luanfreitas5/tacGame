@@ -2,14 +2,18 @@
  * @file Main.cpp
  * @author Luan Mendes Gonçalves Freitas - 150015585
  * @brief Modulo de inicializacao do programa/jogo;
- * @version 0.1
+ * @version 0.2
  * 
  * @copyright Copyright (c) 2021
  * 
  */
 #include "../include/Game.h"
+#include "../include/Resources.h"
 
 Game *Game::instance = nullptr;
+unordered_map<string, SDL_Texture*> Resources::imageTable = { { "", nullptr } };
+unordered_map<string, Mix_Music*> Resources::musicTable = { { "", nullptr } };
+unordered_map<string, Mix_Chunk*> Resources::soundTable = { { "", nullptr } };
 
 /**
  * @brief Metodo de inicializacao do programa/jogo
@@ -22,7 +26,6 @@ int main(int argc, char **argv) {
 
 	Game game = Game::GetInstance();
 	game.Run();
-	game.~Game();
 	cout << "Fim" << endl;
 
 	return 0;
