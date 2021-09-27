@@ -2,7 +2,7 @@
  * @file Sprite.cpp
  * @author Luan Mendes Gonçalves Freitas - 150015585
  * @brief Modulo dos metodos da classe Sprite
- * @version 0.2
+ * @version 0.3
  * 
  * @copyright Copyright (c) 2021
  * 
@@ -10,6 +10,7 @@
 
 #include "../include/Sprite.h"
 #include "../include/Game.h"
+#include "../include/Resources.h"
 
 /**
  * @brief Construtor da Classe Sprite
@@ -62,13 +63,15 @@ void Sprite::Open(string file) {
 		SDL_DestroyTexture(texture);
 	}
 
+	Sprite::texture = Resources::GetImage(file);
+
 	texture = IMG_LoadTexture(Game::GetInstance().GetRenderer(), file.c_str());
 
 	int queryTexture = SDL_QueryTexture(texture, nullptr, nullptr, &width,
 			&height);
 
 	if (texture == nullptr) {
-		cout << ERRO_INIT_TEXTURE << SDL_GetError() << endl;
+		cout << ERRO_INIT_TEXTURE << file << " " << SDL_GetError() << endl;
 		exit(0);
 
 	} else if (queryTexture != 0) {
@@ -96,27 +99,6 @@ void Sprite::SetClip(int x, int y, int w, int h) {
 }
 
 /**
- * @brief Metodo renderizador da textura imagem
- *
- */
-void Sprite::Render() {
-
-	SDL_Rect sdlReact;
-	sdlReact.x = associated.box.x;
-	sdlReact.y = associated.box.y;
-	sdlReact.w = clipRect.w;
-	sdlReact.h = clipRect.h;
-
-	int renderCopy = SDL_RenderCopy(Game::GetInstance().GetRenderer(), texture,
-			&clipRect, &sdlReact);
-
-	if (renderCopy != 0) {
-		cout << ERRO_INIT_RENDER << SDL_GetError() << endl;
-		exit(0);
-	}
-}
-
-/**
  * @brief Obtem o tamanho largura da imagem
  *
  * @return int
@@ -135,18 +117,35 @@ int Sprite::GetHeight() {
 }
 
 /**
- * @brief Verifica se arquivo de imagem de entrada for carregado com sucesso.
+ * @brief Metodo renderizador da textura imagem
  *
- * @return true se o objeto existe
- * @return false se o objeto é null
  */
-bool Sprite::IsOpen() {
+void Sprite::Render() {
 
-	if (texture != nullptr) {
-		return true;
+	Render(associated.box.x, associated.box.y);
+}
+
+/**
+ * @brief Metodo renderizador da textura imagem
+ * 
+ * @param x posicao x na textura imagem
+ * @param y posicao y na textura imagem
+ */
+void Sprite::Render(int x, int y) {
+
+	SDL_Rect sdlReact;
+	sdlReact.x = x;
+	sdlReact.y = y;
+	sdlReact.w = clipRect.w;
+	sdlReact.h = clipRect.h;
+
+	int renderCopy = SDL_RenderCopy(Game::GetInstance().GetRenderer(), texture,
+			&clipRect, &sdlReact);
+
+	if (renderCopy != 0) {
+		cout << ERRO_INIT_RENDER << SDL_GetError() << endl;
+		exit(0);
 	}
-
-	return false;
 }
 
 /**
@@ -168,8 +167,24 @@ void Sprite::Update(float dt) {
  * @return false caso contrario
  */
 bool Sprite::Is(string type) {
+
 	if (type.compare("Sprite") == 0) {
 		return true;
 	}
+	return false;
+}
+
+/**
+ * @brief Verifica se arquivo de imagem de entrada for carregado com sucesso.
+ *
+ * @return true se o objeto existe
+ * @return false se o objeto é null
+ */
+bool Sprite::IsOpen() {
+
+	if (texture != nullptr) {
+		return true;
+	}
+
 	return false;
 }

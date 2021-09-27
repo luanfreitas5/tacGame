@@ -2,7 +2,7 @@
  * @file Sprite.h
  * @author Luan Mendes Gonçalves Freitas - 150015585
  * @brief Cabecalho da classe Sprite com seus prototipos de funcoes e ponteiros.
- * @version 0.2
+ * @version 0.3
  * 
  * @copyright Copyright (c) 2021
  * 
@@ -82,12 +82,19 @@ public:
 	int GetHeight();
 
 	/**
-	 * @brief Verifica se arquivo de imagem de entrada for carregado com sucesso.
-	 * 
-	 * @return true se o objeto existe
-	 * @return false se o objeto é null
+	 * @brief Sobreposicao do metodo da classe Component.
+	 * Metodo para renderizar o componente.
+	 *
 	 */
-	bool IsOpen();
+	void Render();
+
+	/**
+	 * @brief Metodo renderizador da textura imagem
+	 *
+	 * @param x posicao x na textura imagem
+	 * @param y posicao y na textura imagem
+	 */
+	void Render(int x, int y);
 
 	/**
 	 * @brief Sobreposicao do metodo da classe Component.
@@ -99,13 +106,6 @@ public:
 
 	/**
 	 * @brief Sobreposicao do metodo da classe Component.
-	 * Metodo para renderizar o componente.
-	 *
-	 */
-	void Render();
-
-	/**
-	 * @brief Sobreposicao do metodo da classe Component.
 	 * Metodo para verificar o componente.
 	 *
 	 * @param type tipo de componente
@@ -113,6 +113,14 @@ public:
 	 * @return false caso contrario
 	 */
 	bool Is(string type);
+
+	/**
+	 * @brief Verifica se arquivo de imagem de entrada for carregado com sucesso.
+	 *
+	 * @return true se o objeto existe
+	 * @return false se o objeto é null
+	 */
+	bool IsOpen();
 
 private:
 	/**
