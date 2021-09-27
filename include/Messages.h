@@ -2,7 +2,7 @@
  * @file Messages.h
  * @author Luan Mendes Gonçalves Freitas - 150015585
  * @brief Cabecalho de mensagens de textos
- * @version 0.2
+ * @version 0.3
  * 
  * @copyright Copyright (c) 2021
  * 
@@ -50,5 +50,6 @@
 
 #define ERRO_OPEN_SOUND RED "Erro nao foi possivel abrir arquivo sound Mix_LoadWAV: " RESET
 
+#define ERRO_LOAD_FILE RED "Erro nao foi possivel carregar arquivo tileMap: " RESET
 
 #endif /* MESSAGES_H_ */
