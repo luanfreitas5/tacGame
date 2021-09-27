@@ -2,7 +2,7 @@
  * @file Face.cpp
  * @author Luan Mendes Gonçalves Freitas - 150015585
  * @brief 
- * @version 0.1
+ * @version 0.2
  * 
  * @copyright Copyright (c) 2021
  * 
@@ -48,6 +48,15 @@ void Face::Damage(int damage) {
 
 /**
  * @brief Sobreposicao do metodo da classe Component.
+ * Metodo para renderizar o componente.
+ *
+ */
+void Face::Render() {
+
+}
+
+/**
+ * @brief Sobreposicao do metodo da classe Component.
  * Metodo para atualizar o componente.
  *
  * @param dt entrada de botoes do jogador
@@ -59,15 +68,6 @@ void Face::Update(float dt) {
 			associated.RequestDelete();
 		}
 	}
-
-}
-
-/**
- * @brief Sobreposicao do metodo da classe Component.
- * Metodo para renderizar o componente.
- *
- */
-void Face::Render() {
 
 }
 
