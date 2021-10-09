@@ -1,8 +1,8 @@
 /**
  * @file Sound.cpp
  * @author Luan Mendes Gonçalves Freitas - 150015585
- * @brief 
- * @version 0.2
+ * @brief Modulo dos metodos da classe Sound
+ * @version 0.3
  * 
  * @copyright Copyright (c) 2021
  * 
@@ -34,9 +34,15 @@ Sound::Sound(GameObject &associated) :
  */
 Sound::Sound(GameObject &associated, string file) :
 		Sound(associated) {
-
 	Open(file);
+}
 
+/**
+ * @brief Destrutor da Classe Sound
+ *
+ */
+Sound::~Sound() {
+	Stop();
 }
 
 /**
@@ -46,9 +52,14 @@ Sound::Sound(GameObject &associated, string file) :
  */
 void Sound::Play(int times) {
 
-	channel = Mix_PlayChannel(-1, chunk, times - 1);
-	if (channel == -1) {
-		cout << ERRO_PLAY_MIX_PLAYCHANNEL << SDL_GetError() << endl;
+	if (chunk != nullptr) {
+		channel = Mix_PlayChannel(-1, chunk, times - 1);
+		if (channel == -1) {
+			cout << ERRO_PLAY_MIX_PLAYCHANNEL << SDL_GetError() << endl;
+			exit(0);
+		}
+	} else {
+		cout << ERRO_PLAY_SOUND << SDL_GetError() << endl;
 		exit(0);
 	}
 
@@ -65,6 +76,9 @@ void Sound::Stop() {
 			cout << ERRO_STOP_MIX_HALTCHANNEL << SDL_GetError() << endl;
 			exit(0);
 		}
+	} else {
+		cout << ERRO_STOP_SOUND << SDL_GetError() << endl;
+		exit(0);
 	}
 
 }
@@ -79,7 +93,7 @@ void Sound::Open(string file) {
 	chunk = Resources::GetSound(file);
 
 	if (chunk == nullptr) {
-		cout << ERRO_OPEN_SOUND << file << " " << SDL_GetError() << endl;
+		cout << ERRO_OPEN_FILE_SOUND << file << " " << SDL_GetError() << endl;
 		exit(0);
 	}
 
@@ -98,7 +112,7 @@ void Sound::Render() {
  * @brief Sobreposicao do metodo da classe Component.
  * Metodo para atualizar o componente.
  *
- * @param dt entrada de botoes do jogador
+ * @param dt valor Delta Time
  */
 void Sound::Update(float dt) {
 

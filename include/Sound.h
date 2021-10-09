@@ -2,7 +2,7 @@
  * @file Sound.h
  * @author Luan Mendes Gonçalves Freitas - 150015585
  * @brief Cabecalho da classe Sound com seus prototipos de metodo e ponteiros.
- * @version 0.2
+ * @version 0.3
  * 
  * @copyright Copyright (c) 2021
  * 
@@ -47,6 +47,12 @@ public:
 	Sound(GameObject &associated, string file);
 
 	/**
+	 * @brief Destrutor da Classe Sound
+	 *
+	 */
+	~Sound();
+
+	/**
 	 * @brief Metodo para executar som.
 	 * 
 	 * @param times Determina quantas vezes som é executada no jogo.
@@ -85,7 +91,7 @@ public:
 	 * @brief Sobreposicao do metodo da classe Component.
 	 * Metodo para atualizar o componente.
 	 *
-	 * @param dt entrada de botoes do jogador
+	 * @param dt valor Delta Time
 	 */
 	void Update(float dt);
 
