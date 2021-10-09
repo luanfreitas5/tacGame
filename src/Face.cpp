@@ -1,8 +1,8 @@
 /**
  * @file Face.cpp
  * @author Luan Mendes Gonçalves Freitas - 150015585
- * @brief 
- * @version 0.2
+ * @brief Modulo dos metodos da classe Face
+ * @version 0.3
  * 
  * @copyright Copyright (c) 2021
  * 
@@ -59,7 +59,7 @@ void Face::Render() {
  * @brief Sobreposicao do metodo da classe Component.
  * Metodo para atualizar o componente.
  *
- * @param dt entrada de botoes do jogador
+ * @param dt valor Delta Time
  */
 void Face::Update(float dt) {
 

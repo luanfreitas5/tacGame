@@ -2,7 +2,7 @@
  * @file Face.h
  * @author Luan Mendes Gonçalves Freitas - 150015585
  * @brief Cabecalho da classe Face com seus prototipos de metodo e ponteiros.
- * @version 0.2
+ * @version 0.3
  * 
  * @copyright Copyright (c) 2021
  * 
@@ -58,7 +58,7 @@ public:
 	 * @brief Sobreposicao do metodo da classe Component.
 	 * Metodo para atualizar o componente.
 	 * 
-	 * @param dt entrada de botoes do jogador
+	 * @param dt valor Delta Time
 	 */
 	void Update(float dt);
 
