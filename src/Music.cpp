@@ -2,7 +2,7 @@
  * @file Music.cpp
  * @author Luan Mendes Gonçalves Freitas - 150015585
  * @brief Modulo dos metodos da classe Music
- * @version 0.2
+ * @version 0.3
  * 
  * @copyright Copyright (c) 2021
  * 
@@ -25,8 +25,15 @@ Music::Music() {
  * @param file nome do arquivo de audio (.wav/.ogg) de entrada.
  */
 Music::Music(string file) {
-
 	Open(file);
+}
+
+/**
+ * @brief Destrutor da Classe Music
+ *
+ */
+Music::~Music() {
+	Stop(0);
 }
 
 /**
@@ -36,7 +43,16 @@ Music::Music(string file) {
  * Se valor de entrada for -1 significa loop infinito e 0 a musica não é executada.
  */
 void Music::Play(int times) {
-	Mix_PlayMusic(music, times);
+
+	if (music != nullptr) {
+		if (Mix_PlayMusic(music, times) == -1) {
+			cout << ERRO_PLAY_MIX_PLAYMUSIC << SDL_GetError() << endl;
+			exit(0);
+		}
+	} else {
+		cout << ERRO_PLAY_MUSIC << SDL_GetError() << endl;
+		exit(0);
+	}
 }
 
 /**
@@ -46,7 +62,16 @@ void Music::Play(int times) {
  * ou seja, parar a musica.
  */
 void Music::Stop(int msToStop) {
-	Mix_FadeOutMusic(msToStop);
+
+	if (music != nullptr) {
+		if (Mix_FadeOutMusic(msToStop) == 0) {
+			cout << ERRO_STOP_MIX_FADEOUTMUSIC << SDL_GetError() << endl;
+			exit(0);
+		}
+	} else {
+		cout << ERRO_STOP_MUSIC << SDL_GetError() << endl;
+		exit(0);
+	}
 }
 
 /**
@@ -59,7 +84,7 @@ void Music::Open(string file) {
 	music = Resources::GetMusic(file);
 
 	if (music == nullptr) {
-		cout << ERRO_INIT_MUSIC << file << " " << SDL_GetError() << endl;
+		cout << ERRO_OPEN_FILE_MUSIC << file << " " << SDL_GetError() << endl;
 		exit(0);
 	}
 }
