@@ -1,7 +1,7 @@
 /**
  * @file Vec2.cpp
  * @author Luan Mendes Gonçalves Freitas - 150015585
- * @brief 
+ * @brief Modulo dos metodos da classe Vec2
  * @version 0.1
  * 
  * @copyright Copyright (c) 2021
