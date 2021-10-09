@@ -49,7 +49,7 @@ public:
 	 * @brief Metodo Virtual.
 	 * Metodo para atualizar o componente.
 	 *
-	 * @param dt entrada de botoes do jogador
+	 * @param dt valor Delta Time
 	 */
 	virtual void Update(float dt) = 0;
 

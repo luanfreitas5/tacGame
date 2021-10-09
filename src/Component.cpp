@@ -1,7 +1,7 @@
 /**
  * @file Component.cpp
  * @author Luan Mendes Gonçalves Freitas - 150015585
- * @brief 
+ * @brief Modulo dos metodos da classe Component
  * @version 0.1
  * 
  * @copyright Copyright (c) 2021
