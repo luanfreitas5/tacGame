@@ -1,8 +1,8 @@
 /**
  * @file GameObject.cpp
  * @author Luan Mendes Gonçalves Freitas - 150015585
- * @brief 
- * @version 0.1
+ * @brief Modulo dos metodos da classe GameObject
+ * @version 0.2
  * 
  * @copyright Copyright (c) 2021
  * 
@@ -34,14 +34,14 @@ GameObject::~GameObject() {
 /**
  * @brief Metodo para atualizar o componente.
  *
- * @param dt entrada de botoes do jogador
+ * @param dt valor Delta Time
  */
 void GameObject::Update(float dt) {
 
 	int i, tamanhoComponents = components.size() - 1;
 
 	for (i = tamanhoComponents; i >= 0; i--) {
-		components.at(i)->Update(dt);
+		components[i]->Update(dt);
 	}
 
 }
@@ -55,7 +55,7 @@ void GameObject::Render() {
 	int i, tamanhoComponents = components.size();
 
 	for (i = 0; i < tamanhoComponents; i++) {
-		components.at(i)->Render();
+		components[i]->Render();
 	}
 
 }
@@ -105,7 +105,7 @@ void GameObject::RemoveComponent(Component *cpt) {
 
 	for (i = 0; i < tamanhoComponents; i++) {
 
-		if (components.at(i).get() == cpt) {
+		if (components[i].get() == cpt) {
 			components.erase(components.begin() + i);
 			break;
 		}
@@ -124,8 +124,8 @@ Component* GameObject::GetComponent(string type) {
 
 	for (i = tamanhoComponents; i >= 0; i--) {
 
-		if (components.at(i)->Is(type)) {
-			return components.at(i).get();
+		if (components[i]->Is(type)) {
+			return components[i].get();
 		}
 	}
 	return nullptr;
