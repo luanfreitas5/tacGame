@@ -28,11 +28,12 @@ SDL_Texture* Resources::GetImage(string file) {
 		return imageIterator->second;
 
 	} else {
-		SDL_Texture *sdlTexture = IMG_LoadTexture(
-				Game::GetInstance().GetRenderer(), file.c_str());
+		SDL_Renderer *sdlRenderer = Game::GetInstance().GetRenderer();
+		SDL_Texture *sdlTexture = IMG_LoadTexture(sdlRenderer, file.c_str());
 
 		if (sdlTexture == nullptr) {
-			cout << ERRO_INIT_TEXTURE << file << " " << SDL_GetError() << endl;
+			cout << ERRO_OPEN_FILE_IMAGE << file << " " << SDL_GetError()
+					<< endl;
 			exit(0);
 		}
 
@@ -81,7 +82,8 @@ Mix_Music* Resources::GetMusic(string file) {
 		Mix_Music *mixMusic = Mix_LoadMUS(file.c_str());
 
 		if (mixMusic == nullptr) {
-			cout << ERRO_INIT_MUSIC << file << " " << SDL_GetError() << endl;
+			cout << ERRO_OPEN_FILE_MUSIC << file << " " << SDL_GetError()
+					<< endl;
 			exit(0);
 		}
 
@@ -130,7 +132,8 @@ Mix_Chunk* Resources::GetSound(string file) {
 		Mix_Chunk *mixChunk = Mix_LoadWAV(file.c_str());
 
 		if (mixChunk == nullptr) {
-			cout << ERRO_OPEN_SOUND << file << " " << SDL_GetError() << endl;
+			cout << ERRO_OPEN_FILE_SOUND << file << " " << SDL_GetError()
+					<< endl;
 			exit(0);
 		}
 
