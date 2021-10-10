@@ -2,7 +2,7 @@
  * @file State.h
  * @author Luan Mendes Gonçalves Freitas - 150015585
  * @brief Cabecalho da classe State com seus prototipos de funcoes e ponteiros.
- * @version 0.3
+ * @version 0.4
  * 
  * @copyright Copyright (c) 2021
  * 
@@ -31,6 +31,7 @@
 #include "Vec2.h"
 #include "TileMap.h"
 #include "TileSet.h"
+#include "CameraFollower.h"
 #include <iostream>
 
 using namespace std;
@@ -44,7 +45,7 @@ class State {
 
 public:
 	/**
-	 * @brief Construtor da Classe Sprite
+	 * @brief Construtor da Classe State
 	 * 
 	 */
 	State();
@@ -72,7 +73,7 @@ public:
 	/**
 	 * @brief Metodo que atualiza o estado do jogo, atualizando o estado dos objetos de jogo na tela
 	 * 
-	 * @param dt entrada de botoes do usuario
+	 * @param dt valor Delta Time
 	 */
 	void Update(float dt);
 

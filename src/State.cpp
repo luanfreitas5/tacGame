@@ -2,7 +2,7 @@
  * @file State.cpp
  * @author Luan Mendes Gonçalves Freitas - 150015585
  * @brief Modulo dos metodos da classe State
- * @version 0.3
+ * @version 0.4
  * 
  * @copyright Copyright (c) 2021
  * 
@@ -11,27 +11,29 @@
 #include "../include/State.h"
 
 /**
- * @brief Construtor da Classe Sprite
+ * @brief Construtor da Classe State
  *
  */
 State::State() :
 		music(Music()) {
 
-	GameObject *gameObjectSprite = new GameObject();
-	Sprite *sprite = new Sprite(*gameObjectSprite, FILE_OCEAN);
-	gameObjectSprite->box.x = 0;
-	gameObjectSprite->box.y = 0;
-	gameObjectSprite->AddComponent(sprite);
-	objectArray.emplace_back(gameObjectSprite);
+	GameObject *gameObject_sprite = new GameObject();
+	Sprite *sprite = new Sprite(*gameObject_sprite, FILE_OCEAN);
+	CameraFollower *cameraFollower = new CameraFollower(*gameObject_sprite);
+	gameObject_sprite->box.x = 0;
+	gameObject_sprite->box.y = 0;
+	gameObject_sprite->AddComponent(sprite);
+	gameObject_sprite->AddComponent(cameraFollower);
+	objectArray.emplace_back(gameObject_sprite);
 
-	GameObject *gameObjectTileMap = new GameObject();
-	TileSet *tileSet = new TileSet(*gameObjectTileMap, TILE_WIDTH, TILE_HEIGHT,
-			FILE_TILE_SET);
-	TileMap *tileMap = new TileMap(*gameObjectTileMap, FILE_TILE_MAP, tileSet);
-	gameObjectTileMap->box.x = 0;
-	gameObjectTileMap->box.y = 0;
-	gameObjectTileMap->AddComponent(tileMap);
-	objectArray.emplace_back(gameObjectTileMap);
+	GameObject *gameObject_tileMap = new GameObject();
+	TileSet *tileSet = new TileSet(*gameObject_tileMap, TILE_WIDTH, TILE_HEIGHT,
+	FILE_TILE_SET);
+	TileMap *tileMap = new TileMap(*gameObject_tileMap, FILE_TILE_MAP, tileSet);
+	gameObject_tileMap->box.x = 0;
+	gameObject_tileMap->box.y = 0;
+	gameObject_tileMap->AddComponent(tileMap);
+	objectArray.emplace_back(gameObject_tileMap);
 
 	quitRequested = false;
 }
@@ -56,21 +58,27 @@ void State::LoadAssets() {
 /**
  * @brief Metodo que atualiza o estado do jogo, atualizando o estado dos objetos de jogo na tela
  *
- * @param dt entrada de botoes do usuario
+ * @param dt valor Delta Time
  */
 void State::Update(float dt) {
 
-	Input();
-
 	int i, tamanhoObjectArray = objectArray.size() - 1;
 
+	InputManager &inputManager = InputManager::GetInstance();
+	quitRequested = inputManager.QuitRequested();
+
+	Camera::Update(dt);
+
+	Input();
+
 	for (i = tamanhoObjectArray; i >= 0; i--) {
-		objectArray.at(i)->Update(dt);
+		objectArray[i]->Update(dt);
 	}
 
 	/** Verificando objetos de jogo no estado dead */
 	for (i = tamanhoObjectArray; i >= 0; i--) {
-		if (objectArray.at(i)->IsDead()) {
+		if (objectArray[i]->IsDead()) {
+			Camera::Unfollow();
 			objectArray.erase(objectArray.begin() + i);
 		}
 	}
@@ -85,7 +93,7 @@ void State::Render() {
 	int i, tamanhoObjectArray = objectArray.size();
 
 	for (i = 0; i < tamanhoObjectArray; i++) {
-		objectArray.at(i).get()->Render();
+		objectArray[i]->Render();
 	}
 }
 
@@ -105,64 +113,46 @@ bool State::QuitRequested() {
  *
  */
 void State::Input() {
-	SDL_Event event;
-	int mouseX, mouseY;
+	int i, tamanhoObjectArray = objectArray.size() - 1;
+	InputManager &inputManager = InputManager::GetInstance();
 
-	/** Obtenha as coordenadas do mouse */
-	SDL_GetMouseState(&mouseX, &mouseY);
+	if (inputManager.KeyPress(LEFT_ARROW_KEY)
+			|| inputManager.KeyPress(RIGHT_ARROW_KEY)
+			|| inputManager.KeyPress(UP_ARROW_KEY)
+			|| inputManager.KeyPress(DOWN_ARROW_KEY)) {
+		Camera::Unfollow();
+	}
 
-	/** SDL_PollEvent retorna 1 se encontrar eventos, zero caso contrário */
-	while (SDL_PollEvent(&event)) {
+	/** crie um objeto */
+	if (inputManager.KeyPress(SPACE_KEY)) {
+		Vec2 objPos = Vec2(inputManager.GetMouseX(), inputManager.GetMouseY());
+		float distancia = 200;
+		objPos.CalcularRotacaoAngulo(distancia);
+		AddObject((int) objPos.x, (int) objPos.y);
+	}
 
-		/** Se o evento for quit, setar a flag para terminação */
-		if (event.type == SDL_QUIT) {
-			quitRequested = true;
-		}
+	if (inputManager.MousePress(LEFT_MOUSE_BUTTON)) {
 
-		/** Se o evento for clique... */
-		if (event.type == SDL_MOUSEBUTTONDOWN) {
+		/** Percorrer de trás pra frente pra sempre clicar no objeto mais de cima */
+		for (i = tamanhoObjectArray; i >= 0; i--) {
 
-			/** Percorrer de trás pra frente pra sempre clicar no objeto mais de cima */
-			for (int i = objectArray.size() - 1; i >= 0; --i) {
+			int mouseX = inputManager.GetMouseX();
+			int mouseY = inputManager.GetMouseY();
 
-				/** Obtem o ponteiro e casta pra Face. */
-				GameObject *go = (GameObject*) objectArray[i].get();
+			if (objectArray[i]->box.Contains(mouseX, mouseY)) {
 
-				/** Nota: Desencapsular o ponteiro é algo que devemos evitar ao máximo.
-				 * O propósito do unique_ptr é manter apenas uma cópia daquele ponteiro,
-				 * ao usar get(), violamos esse princípio e estamos menos seguros.
-				 * Esse código, assim como a classe Face, é provisório. Futuramente, para
-				 * chamar funções de GameObjects, use objectArray[i]->função() direto. */
-
-				if (go->box.Contains((float) mouseX, (float) mouseY)) {
-
-					Face *face = (Face*) go->GetComponent("Face");
-					if (face != nullptr) {
-						if (!(face->IsDead())) {
-
-							/** Aplica dano */
-							face->Damage(rand() % 10 + 10);
-
-							/** Sai do loop (só queremos acertar um) */
-							break;
-						}
+				Face *face = static_cast<Face*>(objectArray[i]->GetComponent(
+						"Face"));
+				if (face != nullptr) {
+					if (!face->IsDead()) {
+						/** Aplica dano */
+						face->Damage(rand() % 10 + 10);
+						Camera::Follow(objectArray[i].get());
+						/** Sai do loop (só queremos acertar um) */
+						break;
 					}
 				}
-			}
-		}
-		if (event.type == SDL_KEYDOWN) {
 
-			/** Se a tecla for ESC, setar a flag de quit */
-			if (event.key.keysym.sym == SDLK_ESCAPE) {
-				quitRequested = true;
-			}
-
-			/** Se não, crie um objeto */
-			else {
-				Vec2 objPos = Vec2(mouseX, mouseY);
-				float distancia = 200;
-				objPos.CalcularRotacaoAngulo(distancia);
-				AddObject((int) objPos.x, (int) objPos.y);
 			}
 		}
 	}
