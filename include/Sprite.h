@@ -2,7 +2,7 @@
  * @file Sprite.h
  * @author Luan Mendes Gonçalves Freitas - 150015585
  * @brief Cabecalho da classe Sprite com seus prototipos de funcoes e ponteiros.
- * @version 0.3
+ * @version 0.4
  * 
  * @copyright Copyright (c) 2021
  * 
@@ -100,7 +100,7 @@ public:
 	 * @brief Sobreposicao do metodo da classe Component.
 	 * Metodo para atualizar o componente.
 	 *
-	 * @param dt entrada de botoes do jogador
+	 * @param dt valor Delta Time
 	 */
 	void Update(float dt);
 

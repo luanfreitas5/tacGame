@@ -2,7 +2,7 @@
  * @file Sprite.cpp
  * @author Luan Mendes Gonçalves Freitas - 150015585
  * @brief Modulo dos metodos da classe Sprite
- * @version 0.3
+ * @version 0.4
  * 
  * @copyright Copyright (c) 2021
  * 
@@ -47,10 +47,7 @@ Sprite::Sprite(GameObject &associated, string file) :
  *
  */
 Sprite::~Sprite() {
-
-	if (texture != nullptr) {
-		SDL_DestroyTexture(texture);
-	}
+	texture = nullptr;
 }
 
 /**
@@ -63,21 +60,19 @@ void Sprite::Open(string file) {
 		SDL_DestroyTexture(texture);
 	}
 
-	Sprite::texture = Resources::GetImage(file);
+	texture = Resources::GetImage(file);
 
-	texture = IMG_LoadTexture(Game::GetInstance().GetRenderer(), file.c_str());
+	if (texture == nullptr) {
+		cout << ERRO_OPEN_FILE_IMAGE << file << " " << SDL_GetError() << endl;
+		exit(0);
+	}
 
 	int queryTexture = SDL_QueryTexture(texture, nullptr, nullptr, &width,
 			&height);
 
-	if (texture == nullptr) {
-		cout << ERRO_INIT_TEXTURE << file << " " << SDL_GetError() << endl;
-		exit(0);
-
-	} else if (queryTexture != 0) {
+	if (queryTexture != 0) {
 		cout << ERRO_INIT_QUERY_TEXTURE << SDL_GetError() << endl;
 		exit(0);
-
 	} else {
 		SetClip(0, 0, width, height);
 	}
@@ -122,7 +117,7 @@ int Sprite::GetHeight() {
  */
 void Sprite::Render() {
 
-	Render(associated.box.x, associated.box.y);
+	Render(associated.box.x - Camera::pos.x, associated.box.y - Camera::pos.y);
 }
 
 /**
@@ -139,8 +134,9 @@ void Sprite::Render(int x, int y) {
 	sdlReact.w = clipRect.w;
 	sdlReact.h = clipRect.h;
 
-	int renderCopy = SDL_RenderCopy(Game::GetInstance().GetRenderer(), texture,
-			&clipRect, &sdlReact);
+	SDL_Renderer *sdlRenderer = Game::GetInstance().GetRenderer();
+
+	int renderCopy = SDL_RenderCopy(sdlRenderer, texture, &clipRect, &sdlReact);
 
 	if (renderCopy != 0) {
 		cout << ERRO_INIT_RENDER << SDL_GetError() << endl;
@@ -152,7 +148,7 @@ void Sprite::Render(int x, int y) {
  * @brief Sobreposicao do metodo da classe Component.
  * Metodo para atualizar o componente.
  *
- * @param dt entrada de botoes do jogador
+ * @param dt valor Delta Time
  */
 void Sprite::Update(float dt) {
 
