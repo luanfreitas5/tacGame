@@ -2,7 +2,7 @@
  * @file TileMap.cpp
  * @author Luan Mendes Gonçalves Freitas - 150015585
  * @brief Modulo dos metodos da classe TileMap
- * @version 0.1
+ * @version 0.2
  *
  * @copyright Copyright (c) 2021
  *
@@ -33,7 +33,7 @@ void TileMap::Load(string file) {
 
 	ifstream arquivo(file, ifstream::in);
 	if (!arquivo.is_open()) {
-		cout << ERRO_LOAD_FILE << file << " " << SDL_GetError() << endl;
+		cout << ERRO_LOAD_FILE_TILEMAP << file << " " << SDL_GetError() << endl;
 		exit(0);
 	}
 
@@ -151,8 +151,8 @@ void TileMap::RenderLayer(int layer, int cameraX, int cameraY) {
 	for (i = 0; i < mapHeight; i++) {
 		for (j = 0; j < mapWidth; j++) {
 			index = At(j, i, layer);
-			x = j * tileSet->GetTileWidth();
-			y = i * tileSet->GetTileHeight();
+			x = j * tileSet->GetTileWidth() - cameraX;
+			y = i * tileSet->GetTileHeight() - cameraY;
 			tileSet->RenderTile(index, x, y);
 		}
 	}
@@ -168,7 +168,9 @@ void TileMap::Render() {
 	int i;
 
 	for (i = mapDepth - 1; i >= 0; i--) {
-		RenderLayer(i, tileSet->GetTileWidth(), tileSet->GetTileHeight());
+		float cameraX = Camera::pos.x * (1 + i * 0.5);
+		float cameraY = Camera::pos.y * (1 + i * 0.5);
+		RenderLayer(i, cameraX, cameraY);
 	}
 }
 
@@ -176,7 +178,7 @@ void TileMap::Render() {
  * @brief Sobreposicao do metodo da classe Component.
  * Metodo para atualizar o componente.
  *
- * @param dt entrada de botoes do jogador
+ * @param dt valor Delta Time
  */
 void TileMap::Update(float dt) {
 
