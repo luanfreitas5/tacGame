@@ -2,7 +2,7 @@
  * @file Game.h
  * @author Luan Mendes Gonçalves Freitas - 150015585
  * @brief Cabecalho da classe Game com seus prototipos de metodo e ponteiros.
- * @version 0.3
+ * @version 0.4
  * 
  * @copyright Copyright (c) 2021
  * 
@@ -55,23 +55,30 @@ public:
 	/**
 	 * @brief Obtem um objeto Renderer
 	 * 
-	 * @return SDL_Renderer* 
+	 * @return SDL_Renderer* ponteiro para o renderizador SDL do jogo
 	 */
 	SDL_Renderer* GetRenderer();
 
 	/**
 	 * @brief Obtem um objeto State
 	 * 
-	 * @return State& 
+	 * @return State& uma referencia ao estado atual do jogo
 	 */
 	State& GetState();
 
 	/**
 	 * @brief Obtem um objeto Instance
 	 * 
-	 * @return Game& 
+	 * @return Game& um ponteiro para a instancia unica da classe Game
 	 */
 	static Game& GetInstance();
+
+	/**
+	 * @brief Get um valor Delta Time
+	 * 
+	 * @return float valor Delta Time
+	 */
+	float GetDeltaTime();
 
 private:
 
@@ -84,6 +91,12 @@ private:
 	 * @param height Tamanho da altura da tela de jogo
 	 */
 	Game(string title, int width, int height);
+
+	/**
+	 * @brief Metodo para calcular intervalos de tempo
+	 * 
+	 */
+	void CalculateDeltaTime();
 
 	/**
 	 * @brief Ponteiro da instancia unica do jogo.
@@ -108,6 +121,18 @@ private:
 	 *
 	 */
 	State *state;
+
+	/**
+	 * @brief 
+	 * 
+	 */
+	int frameStart;
+
+	/**
+	 * @brief valor Delta Time
+	 * 
+	 */
+	float dt;
 
 };
 

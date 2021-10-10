@@ -2,7 +2,7 @@
  * @file Game.cpp
  * @author Luan Mendes GonÃ§alves Freitas - 150015585
  * @brief Modulo dos metodos da classe Game
- * @version 0.3
+ * @version 0.4
  * 
  * @copyright Copyright (c) 2021
  * 
@@ -82,6 +82,8 @@ Game::Game(string title, int width, int height) {
 
 			} else {
 				state = new State();
+				frameStart = 0;
+				dt = 0;
 			}
 		}
 	}
@@ -110,7 +112,7 @@ Game::~Game() {
 /**
  * @brief Obtem um objeto Instance
  *
- * @return Game&
+ * @return Game& um ponteiro para a instância única da classe Game
  */
 Game& Game::GetInstance() {
 	if (instance != nullptr) {
@@ -124,7 +126,7 @@ Game& Game::GetInstance() {
 /**
  * @brief Obtem um objeto Renderer
  *
- * @return SDL_Renderer*
+ * @return SDL_Renderer* ponteiro para o renderizador SDL do jogo
  */
 SDL_Renderer* Game::GetRenderer() {
 	return renderer;
@@ -133,10 +135,32 @@ SDL_Renderer* Game::GetRenderer() {
 /**
  * @brief Obtem um objeto State
  *
- * @return State&
+ * @return State& uma referencia ao estado atual do jogo
  */
 State& Game::GetState() {
 	return *state;
+}
+
+/**
+ * @brief Metodo para calcular intervalos de tempo
+ *
+ */
+void Game::CalculateDeltaTime() {
+
+	dt = SDL_GetTicks() - frameStart;
+	frameStart = frameStart + dt;
+
+}
+
+/**
+ * @brief Get um valor Delta Time
+ *
+ * @return float valor Delta Time
+ */
+float Game::GetDeltaTime() {
+
+	return dt / 1000;
+
 }
 
 /**
@@ -150,9 +174,22 @@ void Game::Run() {
 	/** Carregando os assests */
 	GetInstance().state->LoadAssets();
 
+	InputManager &inputManager = InputManager::GetInstance();
+
 	/** Inicando o loop do jogo com suas funcionalidades */
 	while (state->QuitRequested() == false) {
 		GetInstance().state->Update(0);
+
+		CalculateDeltaTime();
+		inputManager.Update();
+
+		if (SDL_RenderClear(renderer) != 0) {
+			cout << ERRO_CLEAR_RENDERER << SDL_GetError() << endl;
+			exit(0);
+		}
+
+		GetInstance().state->Update(GetDeltaTime());
+
 		GetInstance().state->Render();
 		SDL_RenderPresent(GetInstance().renderer);
 		SDL_Delay(33);
