@@ -1,4 +1,4 @@
-# Trabalho TAC (2021.1) Game v3.0 - Tile Set, Tile Map e Resource Management
+# Trabalho TAC (2021.1) Game v4.0 - Input, Temporização e Câmera
 
 Implementado e Testado no Sistema Operacional Linux Ubuntu 20.04 LTS.
 
