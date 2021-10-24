@@ -2,7 +2,7 @@
  * @file Camera.cpp
  * @author Luan Mendes Gonçalves Freitas - 150015585
  * @brief Modulo dos metodos da classe Camera
- * @version 0.1
+ * @version 0.2
  *
  * @copyright Copyright (c) 2021
  *
@@ -42,22 +42,6 @@ void Camera::Update(float dt) {
 	if (focus != nullptr) {
 		pos.x = (focus->box.x + (focus->box.w / 2)) - (WIDTH / 2);
 		pos.y = (focus->box.y + (focus->box.h / 2)) - (HEIGHT / 2);
-
-		if (inputManager.IsKeyDown(LEFT_ARROW_KEY)) {
-			focus->box.x -= speed.x * dt;
-		}
-
-		if (inputManager.IsKeyDown(RIGHT_ARROW_KEY)) {
-			focus->box.x += speed.x * dt;
-		}
-
-		if (inputManager.IsKeyDown(UP_ARROW_KEY)) {
-			focus->box.y -= speed.y * dt;
-		}
-
-		if (inputManager.IsKeyDown(DOWN_ARROW_KEY)) {
-			focus->box.y += speed.y * dt;
-		}
 
 	} else {
 
