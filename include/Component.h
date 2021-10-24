@@ -2,7 +2,7 @@
  * @file Component.h
  * @author Luan Mendes Gonçalves Freitas - 150015585
  * @brief Cabecalho da classe Component com seus prototipos de metodo e ponteiros.
- * @version 0.1
+ * @version 0.2
  * 
  * @copyright Copyright (c) 2021
  * 
@@ -69,6 +69,13 @@ public:
 	 * @return false caso contrario
 	 */
 	virtual bool Is(string type) = 0;
+
+	/**
+	 * @brief Metodo Virtual.
+	 * Metodo para inicializa o alien e o array de minions do jogo
+	 * 
+	 */
+	virtual void Start();
 
 private:
 

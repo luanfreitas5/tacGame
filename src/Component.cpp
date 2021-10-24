@@ -2,7 +2,7 @@
  * @file Component.cpp
  * @author Luan Mendes Gonçalves Freitas - 150015585
  * @brief Modulo dos metodos da classe Component
- * @version 0.1
+ * @version 0.2
  * 
  * @copyright Copyright (c) 2021
  * 
@@ -26,4 +26,12 @@ Component::Component(GameObject &associated) :
  */
 Component::~Component() {
 
+}
+
+/**
+ * @brief Metodo Virtual.
+ * Metodo para inicializa o alien e o array de minions do jogo
+ *
+ */
+void Component::Start() {
 }
