@@ -2,7 +2,7 @@
  * @file InputManager.h
  * @author Luan Mendes Gonçalves Freitas - 150015585
  * @brief Cabecalho da classe InputManager com seus prototipos de metodo e ponteiros.
- * @version 0.1
+ * @version 0.3
  *
  * @copyright Copyright (c) 2021
  *
@@ -27,6 +27,7 @@
 
 /** Botoes do Mouse */
 #define LEFT_MOUSE_BUTTON SDL_BUTTON_LEFT
+#define RIGHT_MOUSE_BUTTON SDL_BUTTON_RIGHT
 
 #include "Messages.h"
 #include "SDL_include.h"

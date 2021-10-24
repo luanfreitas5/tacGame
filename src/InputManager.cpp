@@ -2,7 +2,7 @@
  * @file InputManager.cpp
  * @author Luan Mendes Gonçalves Freitas - 150015585
  * @brief Modulo dos metodos da classe InputManager
- * @version 0.1
+ * @version 0.2
  *
  * @copyright Copyright (c) 2021
  *
