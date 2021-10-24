@@ -2,7 +2,7 @@
  * @file GameObject.cpp
  * @author Luan Mendes Gonçalves Freitas - 150015585
  * @brief Modulo dos metodos da classe GameObject
- * @version 0.2
+ * @version 0.3
  * 
  * @copyright Copyright (c) 2021
  * 
@@ -17,7 +17,9 @@
 GameObject::GameObject() :
 		box(Rect()) {
 
+	angleDeg = 0;
 	isDead = false;
+	started = false;
 
 }
 
@@ -129,5 +131,20 @@ Component* GameObject::GetComponent(string type) {
 		}
 	}
 	return nullptr;
+
+}
+
+/**
+ * @brief Metodo para inicializa os componentes de objeto de jogo.
+ *
+ */
+void GameObject::Start() {
+
+	int i, tamanhoComponents = components.size();
+
+	for (i = 0; i < tamanhoComponents; i++) {
+		components[i]->Start();
+	}
+	started = true;
 
 }

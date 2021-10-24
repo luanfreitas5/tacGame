@@ -1,8 +1,8 @@
 /**
  * @file GameObject.h
  * @author Luan Mendes Gonçalves Freitas - 150015585
- * @brief 
- * @version 0.2
+ * @brief Cabecalho da classe GameObject com seus prototipos de metodo e ponteiros.
+ * @version 0.3
  * 
  * @copyright Copyright (c) 2021
  * 
@@ -98,11 +98,23 @@ public:
 	Component* GetComponent(string type);
 
 	/**
+	 * @brief Metodo para inicializa os componentes de objeto de jogo.
+	 *
+	 */
+	void Start();
+
+	/**
 	 * @brief Posisao na qual o objeto é inserido no jogo, com informacoes
 	 * de posicoes x, y, largura e altura.
 	 * 
 	 */
 	Rect box;
+
+	/**
+	 * @brief Angulo objeto de jogo
+	 *
+	 */
+	double angleDeg;
 
 private:
 
@@ -117,6 +129,12 @@ private:
 	 * 
 	 */
 	bool isDead;
+
+	/**
+	 * @brief Flag de start de objeto de jogo
+	 *
+	 */
+	bool started;
 };
 
 #endif /* GAMEOBJECT_H_ */
