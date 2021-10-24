@@ -2,7 +2,7 @@
  * @file Game.cpp
  * @author Luan Mendes Gonçalves Freitas - 150015585
  * @brief Modulo dos metodos da classe Game
- * @version 0.4
+ * @version 0.5
  * 
  * @copyright Copyright (c) 2021
  * 
@@ -171,8 +171,7 @@ float Game::GetDeltaTime() {
  */
 void Game::Run() {
 
-	/** Carregando os assests */
-	GetInstance().state->LoadAssets();
+	state->Start();
 
 	InputManager &inputManager = InputManager::GetInstance();
 

@@ -2,7 +2,7 @@
  * @file Game.h
  * @author Luan Mendes Gonçalves Freitas - 150015585
  * @brief Cabecalho da classe Game com seus prototipos de metodo e ponteiros.
- * @version 0.4
+ * @version 0.5
  * 
  * @copyright Copyright (c) 2021
  * 
