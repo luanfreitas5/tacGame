@@ -78,4 +78,8 @@
 
 #define ERRO_STOP_MIX_HALTCHANNEL RED "Erro de stop som no Mix_HaltChannel: " RESET
 
+/** Action **/
+
+#define ERRO_ACTION RED "Erro Action Invalido: " RESET
+
 #endif /* MESSAGES_H_ */
