@@ -2,7 +2,7 @@
  * @file State.cpp
  * @author Luan Mendes Gonçalves Freitas - 150015585
  * @brief Modulo dos metodos da classe State
- * @version 0.4
+ * @version 0.5
  * 
  * @copyright Copyright (c) 2021
  * 
@@ -35,7 +35,15 @@ State::State() :
 	gameObject_tileMap->AddComponent(tileMap);
 	objectArray.emplace_back(gameObject_tileMap);
 
+	GameObject *gameObject_alien = new GameObject();
+	Alien *alien = new Alien(*gameObject_alien, 8);
+	gameObject_alien->AddComponent(alien);
+	gameObject_alien->box.x = 512 - gameObject_alien->box.w / 2;
+	gameObject_alien->box.y = 300 - gameObject_alien->box.h / 2;
+	AddObject(gameObject_alien);
+
 	quitRequested = false;
+	started = false;
 }
 
 /**
@@ -69,7 +77,7 @@ void State::Update(float dt) {
 
 	Camera::Update(dt);
 
-	Input();
+	//Input();
 
 	for (i = tamanhoObjectArray; i >= 0; i--) {
 		objectArray[i]->Update(dt);
@@ -109,85 +117,48 @@ bool State::QuitRequested() {
 }
 
 /**
- * @brief Metodo detectar entradas de teclas do usuario e trata acoes de acordo
- *
- */
-void State::Input() {
-	int i, tamanhoObjectArray = objectArray.size() - 1;
-	InputManager &inputManager = InputManager::GetInstance();
-
-	if (inputManager.KeyPress(LEFT_ARROW_KEY)
-			|| inputManager.KeyPress(RIGHT_ARROW_KEY)
-			|| inputManager.KeyPress(UP_ARROW_KEY)
-			|| inputManager.KeyPress(DOWN_ARROW_KEY)) {
-		Camera::Unfollow();
-	}
-
-	/** crie um objeto */
-	if (inputManager.KeyPress(SPACE_KEY)) {
-		Vec2 objPos = Vec2(inputManager.GetMouseX(), inputManager.GetMouseY());
-		float distancia = 200;
-		objPos.CalcularRotacaoAngulo(distancia);
-		AddObject((int) objPos.x, (int) objPos.y);
-	}
-
-	if (inputManager.MousePress(LEFT_MOUSE_BUTTON)) {
-
-		/** Percorrer de trás pra frente pra sempre clicar no objeto mais de cima */
-		for (i = tamanhoObjectArray; i >= 0; i--) {
-
-			int mouseX = inputManager.GetMouseX();
-			int mouseY = inputManager.GetMouseY();
-
-			if (objectArray[i]->box.Contains(mouseX, mouseY)) {
-
-				Face *face = static_cast<Face*>(objectArray[i]->GetComponent(
-						"Face"));
-				if (face != nullptr) {
-					if (!face->IsDead()) {
-						/** Aplica dano */
-						face->Damage(rand() % 10 + 10);
-						Camera::Follow(objectArray[i].get());
-						/** Sai do loop (só queremos acertar um) */
-						break;
-					}
-				}
-
-			}
-		}
-	}
-}
-
-/**
  * @brief Metodo para adicionar objeto de jogo (pinguim) na tela de Jogo.
  *
  * @param mouseX coordenada horizontal do retangulo
  * @param mouseY coordenada vertical do retangulo
  */
-void State::AddObject(int x, int y) {
+weak_ptr<GameObject> State::AddObject(GameObject *go) {
 
-	GameObject *gameObject = new GameObject();
-	Sprite *sprite = new Sprite(*gameObject, FILE_PENGUIN_FACE);
-	Sound *sound = new Sound(*gameObject, FILE_BOOM);
-	Face *face = new Face(*gameObject);
+	/* Instantiates the object. */
+	shared_ptr<GameObject> pointer = shared_ptr<GameObject>(go);
 
-	gameObject->box.x = x;
-	gameObject->box.y = y;
+	/* Placing this new object in the object vector. */
+	objectArray.push_back(pointer);
 
-	gameObject->AddComponent(sprite);
-	gameObject->AddComponent(sound);
-	gameObject->AddComponent(face);
+	if (started) {
+		pointer->Start();
+	}
 
-	gameObject->box.x -=
-			static_cast<Sprite*>(gameObject->GetComponent("Sprite"))->GetWidth();
+	return pointer;
 
-	gameObject->box.x /= 2;
+}
 
-	gameObject->box.y -=
-			static_cast<Sprite*>(gameObject->GetComponent("Sprite"))->GetHeight();
+weak_ptr<GameObject> State::GetObjectPtr(GameObject *go) {
 
-	gameObject->box.y /= 2;
+	int i, tamanhoObjectArray = objectArray.size();
+	for (i = 0; i < tamanhoObjectArray; i++) {
+		if (objectArray[i].get() == go) {
+			return objectArray[i];
+		}
+	}
+	return weak_ptr<GameObject>();
 
-	objectArray.emplace_back(gameObject);
+}
+
+void State::Start() {
+
+	/** Carregando os assests */
+	LoadAssets();
+
+	int i, tamanhoObjectArray = objectArray.size();
+	for (i = 0; i < tamanhoObjectArray; i++) {
+		objectArray[i]->Start();
+	}
+	started = true;
 
 }

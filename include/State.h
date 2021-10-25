@@ -2,7 +2,7 @@
  * @file State.h
  * @author Luan Mendes Gonçalves Freitas - 150015585
  * @brief Cabecalho da classe State com seus prototipos de funcoes e ponteiros.
- * @version 0.4
+ * @version 0.5
  * 
  * @copyright Copyright (c) 2021
  * 
@@ -25,9 +25,9 @@
 
 #include "Messages.h"
 #include "SDL_include.h"
+#include "Alien.h"
 #include "Sprite.h"
 #include "Music.h"
-#include "Face.h"
 #include "Vec2.h"
 #include "TileMap.h"
 #include "TileSet.h"
@@ -83,21 +83,29 @@ public:
 	 */
 	void Render();
 
+	/**
+	 * @brief Metodo para adicionar objeto de jogo na tela de Jogo.
+	 * 
+	 * @param go Ponteiro GameObject do objeto de jogo
+	 * @return weak_ptr<GameObject> Instancia GameObject do objeto de jogo
+	 */
+	weak_ptr<GameObject> AddObject(GameObject *go);
+
+	/**
+	 * @brief Get um Ponteiro GameObject
+	 * 
+	 * @param go Ponteiro GameObject do objeto de jogo
+	 * @return weak_ptr<GameObject> Instancia GameObject do objeto de jogo
+	 */
+	weak_ptr<GameObject> GetObjectPtr(GameObject *go);
+
+	/**
+	 * @brief Metodo para inicializa os assets e states do jogo
+	 * 
+	 */
+	void Start();
+
 private:
-
-	/**
-	 * @brief Metodo detectar entradas de teclas do usuario e trata acoes de acordo
-	 * 
-	 */
-	void Input();
-
-	/**
-	 * @brief Metodo para adicionar objeto de jogo (pinguim) na tela de Jogo.
-	 * 
-	 * @param mouseX coordenada horizontal do retangulo
-	 * @param mouseY coordenada vertical do retangulo
-	 */
-	void AddObject(int mouseX, int mouseY);
 
 	/**
 	 * @brief Ponteiro para estado da music do jogo.
@@ -112,10 +120,16 @@ private:
 	bool quitRequested;
 
 	/**
-	 * @brief Indicador sair do jogo.
+	 * @brief Indicador iniciar o jogo.
 	 *
 	 */
-	vector<unique_ptr<GameObject>> objectArray;
+	bool started;
+
+	/**
+	 * @brief Vetor que armazenha objeto de jogo
+	 *
+	 */
+	vector<shared_ptr<GameObject>> objectArray;
 
 };
 
