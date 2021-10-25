@@ -2,7 +2,7 @@
  * @file Rect.cpp
  * @author Luan Mendes Gonçalves Freitas - 150015585
  * @brief Modulo dos metodos da classe Rect
- * @version 0.1
+ * @version 0.2
  * 
  * @copyright Copyright (c) 2021
  * 
@@ -51,5 +51,48 @@ bool Rect::Contains(float mouseX, float mouseY) {
 		return true;
 	}
 	return false;
+
+}
+
+/**
+ * @brief Get Vec2
+ *
+ * @return Vec2
+ */
+Vec2 Rect::GetVec2() {
+	return Vec2(this->x, this->y);
+}
+
+/**
+ * @brief Get Pos
+ *
+ * @return Vec2
+ */
+Vec2 Rect::GetPos() {
+
+	return Vec2(x, y);
+
+}
+
+/**
+ * @brief Get Center
+ *
+ * @return Vec2
+ */
+Vec2 Rect::GetCenter() {
+
+	return Vec2(x + (w / 2), y + (h / 2));
+
+}
+
+/**
+ * @brief Set Pos
+ *
+ * @param pos
+ */
+void Rect::SetPos(Vec2 pos) {
+
+	x = pos.x;
+	y = pos.y;
 
 }

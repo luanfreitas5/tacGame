@@ -2,7 +2,7 @@
  * @file Rect.h
  * @author Luan Mendes Gonçalves Freitas - 150015585
  * @brief Cabecalho da classe Rect com seus prototipos de metodo e ponteiros.
- * @version 0.1
+ * @version 0.2
  * 
  * @copyright Copyright (c) 2021
  * 
@@ -12,6 +12,7 @@
 #define RECT_H_
 
 #include "Messages.h"
+#include "Vec2.h"
 #include <iostream>
 
 using namespace std;
@@ -52,6 +53,34 @@ public:
 	 * @return false caso contrario
 	 */
 	bool Contains(float mouseX, float mouseY);
+
+	/**
+	 * @brief Get Pos
+	 * 
+	 * @return Vec2 
+	 */
+	Vec2 GetPos();
+
+	/**
+	 * @brief Get Center
+	 * 
+	 * @return Vec2 
+	 */
+	Vec2 GetCenter();
+
+	/**
+	 * @brief Set Pos
+	 * 
+	 * @param pos 
+	 */
+	void SetPos(Vec2 pos);
+
+	/**
+	 * @brief Get Vec2
+	 * 
+	 * @return Vec2 
+	 */
+	Vec2 GetVec2();
 
 	/**
 	 * @brief coordenada horizontal do retangulo
