@@ -2,7 +2,7 @@
  * @file Music.cpp
  * @author Luan Mendes Gonçalves Freitas - 150015585
  * @brief Modulo dos metodos da classe Music
- * @version 0.3
+ * @version 0.4
  * 
  * @copyright Copyright (c) 2021
  * 

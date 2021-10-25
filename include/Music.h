@@ -2,7 +2,7 @@
  * @file Music.h
  * @author Luan Mendes Gonçalves Freitas - 150015585
  * @brief Cabecalho da classe Music com seus prototipos de metodos e ponteiros.
- * @version 0.3
+ * @version 0.4
  * 
  * @copyright Copyright (c) 2021
  * 
@@ -37,7 +37,7 @@ public:
 	 * 
 	 * @param file nome do arquivo de audio (.wav/.ogg) de entrada.
 	 */
-	Music(string file);
+	explicit Music(string file);
 
 	/**
 	 * @brief Destrutor da Classe Music
