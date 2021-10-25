@@ -2,7 +2,7 @@
  * @file Sprite.cpp
  * @author Luan Mendes Gonçalves Freitas - 150015585
  * @brief Modulo dos metodos da classe Sprite
- * @version 0.4
+ * @version 0.5
  * 
  * @copyright Copyright (c) 2021
  * 
@@ -184,3 +184,30 @@ bool Sprite::IsOpen() {
 
 	return false;
 }
+
+/**
+ * @brief Set um objeto vec2 de escala
+ *
+ * @param scaleX valor de escala x
+ * @param scaleY valor de escala y
+ */
+void Sprite::SetScale(float scaleX, float scaleY) {
+
+	if (scaleX > 0 && scaleY > 0) {
+		scale.x = scaleX;
+		scale.y = scaleY;
+		associated.box.w = GetWidth();
+		associated.box.h = GetHeight();
+	}
+
+}
+
+/**
+ * @brief Get um objeto vec2 de escala
+ *
+ * @return Vec2 objeto Vec2
+ */
+Vec2 Sprite::GetScale() {
+	return scale;
+}
+

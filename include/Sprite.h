@@ -2,7 +2,7 @@
  * @file Sprite.h
  * @author Luan Mendes Gonçalves Freitas - 150015585
  * @brief Cabecalho da classe Sprite com seus prototipos de funcoes e ponteiros.
- * @version 0.4
+ * @version 0.5
  * 
  * @copyright Copyright (c) 2021
  * 
@@ -23,6 +23,7 @@ using namespace std;
 
 /**
  * @brief Classe Sprite responsavel genereciar as imagens e textura do jogo.
+ * Herda metodos da classe Component
  * 
  */
 class Sprite: public Component {
@@ -122,6 +123,21 @@ public:
 	 */
 	bool IsOpen();
 
+	/**
+	 * @brief Set um objeto vec2 de escala
+	 * 
+	 * @param scaleX valor de escala x
+	 * @param scaleY valor de escala y
+	 */
+	void SetScale(float scaleX, float scaleY);
+
+	/**
+	 * @brief Get um objeto vec2 de escala
+	 * 
+	 * @return Vec2 objeto Vec2
+	 */
+	Vec2 GetScale();
+
 private:
 	/**
 	 * @brief Ponteiro da textura da imagem do jogo.
@@ -146,6 +162,12 @@ private:
 	 *
 	 */
 	SDL_Rect clipRect;
+
+	/**
+	 * @brief Ponteiro da escala do objeto
+	 *
+	 */
+	Vec2 scale;
 
 };
 
